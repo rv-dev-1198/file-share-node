@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 var bodyParser = require('body-parser');
 const app = express();
 app.use(express.json());
@@ -11,14 +12,21 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const connectDB = require('./config/db');
 connectDB();
 
-app.get('/',(req,res) => {
-    return res.render('index');
-});
+// Cors
+const corsOptions = {
+    origin:process.env.ALLOWED_CLIENTS.split(',')
+}
+app.use(cors(corsOptions));
+
 
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
 app.use('/api/files',require('./routes/files')); 
-app.use('/files',require('./routes/show'));  
+app.use('/files',require('./routes/show'));
+
+app.get('/',(req,res) => {
+    return res.render('index');
+});
 
 app.listen(PORT,()=>{
     console.log(`Listen on port ${PORT}`);
