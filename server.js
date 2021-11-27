@@ -11,9 +11,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const connectDB = require('./config/db');
 connectDB();
 
+app.get('/',(req,res) => {
+    return res.render('index');
+});
+
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','ejs');
-app.use('/',require('./routes/files')); 
+app.use('/api/files',require('./routes/files')); 
 app.use('/files',require('./routes/show'));  
 
 app.listen(PORT,()=>{
