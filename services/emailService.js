@@ -3,8 +3,9 @@ const nodemailer = require('nodemailer');
 async function sendMaill({from,to,subject,text,html}){
   try {
     var transport = nodemailer.createTransport({
-      host: process.env.MAIL_HOST, 
-      port: process.env.MAIL_PORT,
+      //host: process.env.MAIL_HOST, 
+      //port: process.env.MAIL_PORT,
+      service: 'SendinBlue',
       auth: {
         user: process.env.MAIL_USERNAME,
         pass: process.env.MAIL_PASSWORD
